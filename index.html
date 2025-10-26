@@ -468,22 +468,50 @@
                 </div>
                 
                 <div class="contact-form" data-aos="fade-left">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" required>
-                            <label for="name">Your Name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" required>
-                            <label for="email">Your Email</label>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                            <label for="message">Your Message</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
+  <form 
+    id="contactForm" 
+    action="https://formspree.io/f/xeopojqd" 
+    method="POST"
+  >
+    <div class="form-group">
+      <input type="text" id="name" name="name" required>
+      <label for="name">Your Name</label>
+    </div>
+
+    <div class="form-group">
+      <input type="email" id="email" name="email" required>
+      <label for="email">Your Email</label>
+    </div>
+
+    <div class="form-group select-group">
+      <select id="service" name="service" required>
+        <option value="" disabled selected>Select a Service</option>
+        <option value="web-development">Web Development</option>
+        <option value="guest-posting">Guest Posting</option>
+        <option value="seo">SEO Optimization</option>
+        <option value="content-writing">Content Writing</option>
+        <option value="other">Other</option>
+      </select>
+      
+      <i class="fas fa-chevron-down select-arrow"></i>
+    </div>
+
+    <div class="form-group">
+      <textarea id="message" name="message" rows="5" required></textarea>
+      <label for="message">Your Message</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <span class="btn-text">Send Message</span>
+      <div class="btn-loader" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i> Sending...
+      </div>
+    </button>
+    
+    <!-- Success/Error Messages -->
+    <div id="formMessages" style="display: none;"></div>
+  </form>
+</div>
             </div>
         </div>
     </section>
@@ -569,6 +597,28 @@
             offset: 100
         });
     </script>
+    <script>
+const form = document.getElementById('contactForm');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  
+  const response = await fetch(form.action, {
+    method: form.method,
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  if (response.ok) {
+    alert("✅ Message sent successfully!");
+    form.reset();
+  } else {
+    alert("❌ There was a problem sending your message. Please try again later.");
+  }
+});
+</script>
+
 </body>
 
 </html>
